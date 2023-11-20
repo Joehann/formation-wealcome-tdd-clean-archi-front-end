@@ -1,6 +1,6 @@
 import {expect} from 'vitest'
 import {QuestionGatewayStub} from "../../gateways/questionGatewayStub.ts";
-import {validateAnswer} from "./validateAnswer.ts";
+import {Pyramid, validateAnswer} from "./validateAnswer.ts";
 
 describe('Validate Answer', () => {
 
@@ -11,18 +11,17 @@ describe('Validate Answer', () => {
     beforeEach(() => {
         questionGateway = new QuestionGatewayStub();
         _validateAnswer = validateAnswer(questionGateway, pyramid);
+        questionGateway.currentValidation = {A: true};
     });
 
     it('A correct given answer should end up with a successful validation', async () => {
-        questionGateway.currentValidation = {A: true};
         const validation = await _validateAnswer('A');
         expect(validation).toBe(true);
     });
 
     it('A correct given answer should increase the pyramid by one step', async () => {
         // GIVEN - ARRANGE
-        questionGateway.currentValidation = {A: true};
-        const pyramid = {
+        const pyramid: Pyramid = {
             steps: [0, 10],
             currentStep: 0
         };
@@ -30,7 +29,7 @@ describe('Validate Answer', () => {
         await _validateAnswer('A');
         // THEN - ASSERT
         expect(pyramid).toEqual({
-            steps: [0, 10],
+            ...pyramid,
             currentStep: 10
         });
     });
