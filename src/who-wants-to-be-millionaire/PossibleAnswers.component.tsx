@@ -1,12 +1,14 @@
 import {useContext} from "react";
 import {UseCasesContext} from "../main.tsx";
+import {GameContext} from "./App.tsx";
 
 export const PossibleAnswers = () => {
 
     const {validateAnswer} = useContext(UseCasesContext);
+    const {pyramid, setPyramid} = useContext(GameContext);
 
     const validateThatAnswer = (givenThatAnswer: string) => async () => {
-        const validation = await validateAnswer(givenThatAnswer);
+        const validation = await validateAnswer(pyramid, setPyramid)(givenThatAnswer);
         alert(validation);
     }
 

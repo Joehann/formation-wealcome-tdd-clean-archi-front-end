@@ -5,15 +5,21 @@ export type Pyramid = {
     currentStep: number;
 }
 
-export const validateAnswer = (questionGateway: QuestionGateway) => (pyramid: Pyramid) =>
-    async (givenAnswer: string) => {
-        const isCorrect = await questionGateway.validate(givenAnswer);
-        const {steps, currentStep} = pyramid;
-        if (isCorrect) {
+export const validateAnswer = (questionGateway: QuestionGateway) =>
+    (pyramid: Pyramid, setPyramid: (pyramid: Pyramid) => void) =>
+        async (givenAnswer: string) => {
+
+            const changeCurrentStep = (nextStepIndex: number) => {
+                setPyramid({...pyramid, currentStep: steps[nextStepIndex]});
+            }
+
+            const isCorrect = await questionGateway.validate(givenAnswer);
+            const {steps, currentStep} = pyramid;
+            if (!isCorrect) {
+                changeCurrentStep(0);
+                return;
+            }
             const currentStepIndex = steps.indexOf(currentStep);
-            pyramid.currentStep = steps[currentStepIndex + 1];
+            changeCurrentStep(currentStepIndex + 1);
+            return isCorrect;
         }
-        else
-            pyramid.currentStep = pyramid.steps[0];
-        return isCorrect;
-    }
