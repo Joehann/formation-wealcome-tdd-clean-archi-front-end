@@ -1,6 +1,6 @@
 import {useContext} from "react";
 import {GameContext} from "../App.tsx";
-import {UseCasesContext} from "../../dependencies.tsx";
+import {UseCasesContext} from "../../useCasesInjections.tsx";
 
 export const PossibleAnswers = () => {
 

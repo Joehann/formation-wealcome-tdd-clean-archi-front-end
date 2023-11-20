@@ -1,6 +1,6 @@
 import {render, screen} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import {UseCasesContext} from "../../dependencies.tsx";
+import {UseCasesContext} from "../../useCasesInjections.tsx";
 import {QuestionGatewayStub} from "../../../../secondary/gateways/questionGatewayStub.ts";
 import {validateAnswer} from "../../../../../core-logic/use-cases/answer-validation/validateAnswer.ts";
 import App from "../App.tsx";
