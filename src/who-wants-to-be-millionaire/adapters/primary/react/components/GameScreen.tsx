@@ -1,6 +1,6 @@
-import { CurrentQuestion } from "./CurrentQuestion.component.tsx";
-import { Jokers } from "./Jokers.component.tsx";
-import { Pyramid } from "./Pyramid.component.tsx";
+import { CurrentQuestion } from "./current-question/CurrentQuestion.component.tsx";
+import { Jokers } from "./jokers/Jokers.component.tsx";
+import { Pyramid } from "./pyramid/Pyramid.component.tsx";
 
 
 export const GameScreen = () => {

@@ -1,5 +1,5 @@
 import {useContext} from "react";
-import {GameContext} from "./App.tsx";
+import {GameContext} from "../App.tsx";
 
 export const Pyramid = () => {
 

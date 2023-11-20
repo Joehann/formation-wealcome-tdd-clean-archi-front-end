@@ -1,4 +1,4 @@
-import {QuestionGateway} from "./questionGateway.ts";
+import {QuestionGateway} from "../../../core-logic/gateways/questionGateway.ts";
 
 export class QuestionGatewayStub implements QuestionGateway {
 

@@ -1,7 +1,7 @@
-import { QuestionTitle } from "./QuestionTitle.component.tsx";
-import { PossibleAnswers } from "./PossibleAnswers.component.tsx";
-import jfoucault from "../assets/img/jfoucault.jpeg";
-import { Countdown } from "./Countdown.tsx";
+import {QuestionTitle} from "./QuestionTitle.component.tsx";
+import {PossibleAnswers} from "./PossibleAnswers.component.tsx";
+import jfoucault from "../../../../../../assets/img/jfoucault.jpeg";
+import {Countdown} from "../countdown/Countdown.tsx";
 
 export const CurrentQuestion = () => {
   return (

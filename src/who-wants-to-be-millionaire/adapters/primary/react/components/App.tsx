@@ -1,5 +1,5 @@
-import "../App.css";
-import {Pyramid} from "./core-logic/use-cases/answer-validation/validateAnswer.ts";
+import "../../../../../App.css";
+import {Pyramid} from "../../../../core-logic/use-cases/answer-validation/validateAnswer.ts";
 import React, {Context} from "react";
 import {GameScreen} from "./GameScreen.tsx";
 
@@ -10,7 +10,7 @@ type Game = {
 
 export let GameContext: Context<Game>;
 
-export const App = () => {
+const App = () => {
 
     const initialGame: Game = {
         pyramid: {steps: [0, 1000000], currentStep: 0},
@@ -27,3 +27,5 @@ export const App = () => {
         <GameScreen />
     </GameContext.Provider>
 };
+
+export default App;

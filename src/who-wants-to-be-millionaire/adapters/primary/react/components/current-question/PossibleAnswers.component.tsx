@@ -1,6 +1,6 @@
 import {useContext} from "react";
-import {UseCasesContext} from "../main.tsx";
-import {GameContext} from "./App.tsx";
+import {GameContext} from "../App.tsx";
+import {UseCasesContext} from "../../dependencies.tsx";
 
 export const PossibleAnswers = () => {
 

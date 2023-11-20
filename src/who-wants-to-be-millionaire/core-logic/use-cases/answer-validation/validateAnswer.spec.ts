@@ -1,5 +1,5 @@
 import {expect} from 'vitest'
-import {QuestionGatewayStub} from "../../gateways/questionGatewayStub.ts";
+import {QuestionGatewayStub} from "../../../adapters/secondary/gateways/questionGatewayStub.ts";
 import {Pyramid, validateAnswer} from "./validateAnswer.ts";
 
 describe('Validate Answer', () => {
