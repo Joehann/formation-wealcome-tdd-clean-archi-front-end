@@ -21,7 +21,7 @@ describe('Retrieve Question', () => {
         expect(store.getState()).toEqual({
             ...initialState,
             questionRetrieval: {
-                question: {
+                data: {
                     id: '123abc',
                     label: 'What is the capital of France?',
                     possibleAnswers: {

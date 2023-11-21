@@ -1,10 +1,16 @@
-import {AnyAction} from "@reduxjs/toolkit";
+import {createReducer} from "@reduxjs/toolkit";
+import {questionRetrievedAction} from "../use-cases/question-retrieval/questionRetrievalActions.ts";
+import {AppState} from "../../store/appState.ts";
 
-export const questionRetrievalReducer = (state = {question: null}, action: AnyAction) => {
-    if (action.type === "QUESTION_RETRIEVED") {
-        return {
-            question: action.payload,
-        };
-    }
-    return state;
-}
+export const questionRetrievalReducer =
+    createReducer<AppState['questionRetrieval']>(
+        null,
+        builder => {
+            builder.addCase(questionRetrievedAction,
+                (_, action) => {
+                    return {
+                        data: action.payload.question,
+                    };
+                }
+            );
+        });

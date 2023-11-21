@@ -13,22 +13,22 @@ import {validateAnswer} from "../../../../../core-logic/use-cases/answer-validat
 export const CurrentQuestion = () => {
 
     const dispatch = useDispatch<AppDispatch>();
-    const question = useSelector((state: AppState) => state.questionRetrieval.question);
+    const question = useSelector((state: AppState) => state.questionRetrieval);
 
     useEffect(() => {
         dispatch(retrieveQuestion());
     }, []);
 
     const validateThatAnswer = (givenThatAnswer: AnswerLetter) => async () =>
-        dispatch(validateAnswer(question!.id, givenThatAnswer));
+        dispatch(validateAnswer(question!.data.id, givenThatAnswer));
 
     return (
         <div>
             <img src={jfoucault} alt="Jean-Pierre Foucault"/>
             <br/>
             {question && <><Countdown/>
-                <QuestionTitle title={question!.label}/>
-                <PossibleAnswers possibleAnswers={question.possibleAnswers} onGivenAnswer={validateThatAnswer}/>
+                <QuestionTitle title={question.data.label}/>
+                <PossibleAnswers possibleAnswers={question.data.possibleAnswers} onGivenAnswer={validateThatAnswer}/>
             </>}
         </div>
     );

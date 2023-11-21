@@ -2,8 +2,8 @@ import {Question} from "../core-logic/use-cases/question-retrieval/question.ts";
 
 export interface AppState {
     questionRetrieval: {
-        question: Question | null
-    },
+        data: Question
+    } | null,
     answerValidation: {
         isCorrect: boolean
     } | null,
