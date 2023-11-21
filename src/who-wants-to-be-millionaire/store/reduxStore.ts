@@ -44,9 +44,8 @@ export const initReduxStore = (options: {
                 },
                 serializableCheck: false,
             });
-            if (config.enableActionsListeners) {
+            if (config.enableActionsListeners)
                 return middleware.prepend(retrieveNextQuestionListener.middleware);
-            }
             return middleware;
         }
     });
