@@ -1,21 +1,12 @@
-import {FC, useContext} from "react";
-import {GameContext} from "../App.tsx";
-import {UseCasesContext} from "../../useCasesInjections.tsx";
+import {FC} from "react";
 import {AnswerLetter, Question} from "../../../../../core-logic/use-cases/question-retrieval/question.ts";
 
 type Props = {
-    questionId: Question['id'],
     possibleAnswers: Question['possibleAnswers'],
-    goToNextQuestion: () => void;
+    onGivenAnswer: (givenAnswer: AnswerLetter) => () => void;
 }
 
-export const PossibleAnswers: FC<Props> = ({questionId, possibleAnswers, goToNextQuestion}) => {
-
-    const {validateAnswer} = useContext(UseCasesContext);
-    const {pyramid, setPyramid} = useContext(GameContext);
-
-    const validateThatAnswer = (givenThatAnswer: AnswerLetter) => async () =>
-        validateAnswer(pyramid, setPyramid, goToNextQuestion)(questionId, givenThatAnswer)
+export const PossibleAnswers: FC<Props> = ({possibleAnswers, onGivenAnswer}) => {
 
     return (
         <div
@@ -23,7 +14,7 @@ export const PossibleAnswers: FC<Props> = ({questionId, possibleAnswers, goToNex
             {possibleAnswers && Object.entries(possibleAnswers).map(([letter, label]) => (
                 <div key={letter}
                      className="border-3 border-blue-300 rounded-lg px-3 py-1 bg-gray-900"
-                     onClick={validateThatAnswer(letter as AnswerLetter)}>
+                     onClick={onGivenAnswer(letter as AnswerLetter)}>
                     <span className="text-orange-500">{letter}:</span> {label}
                 </div>
             ))}

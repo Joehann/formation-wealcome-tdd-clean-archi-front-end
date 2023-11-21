@@ -2,35 +2,33 @@ import {QuestionTitle} from "./QuestionTitle.component.tsx";
 import {PossibleAnswers} from "./PossibleAnswers.component.tsx";
 import jfoucault from "../../../../../../assets/img/jfoucault.jpeg";
 import {Countdown} from "../countdown/Countdown.tsx";
-import {useContext, useEffect, useState} from "react";
-import {UseCasesContext} from "../../useCasesInjections.tsx";
-import {Question} from "../../../../../core-logic/use-cases/question-retrieval/question.ts";
+import {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {retrieveQuestion} from "../../../../../core-logic/use-cases/question-retrieval/retrieveQuestion.ts";
+import {AppDispatch} from "../../../../../store/reduxStore.ts";
+import {AppState} from "../../../../../store/appState.ts";
+import {AnswerLetter} from "../../../../../core-logic/use-cases/question-retrieval/question.ts";
+import {validateAnswer} from "../../../../../core-logic/use-cases/answer-validation/validateAnswer.ts";
 
 export const CurrentQuestion = () => {
 
-    const {retrieveQuestion} = useContext(UseCasesContext);
-    const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
-
-    async function retrieveCurrentQuestion() {
-        const question = await retrieveQuestion();
-        setCurrentQuestion(question);
-    }
+    const dispatch = useDispatch<AppDispatch>();
+    const question = useSelector((state: AppState) => state.questionRetrieval.question);
 
     useEffect(() => {
-        goToNextQuestion();
+        dispatch(retrieveQuestion());
     }, []);
 
-    const goToNextQuestion = async () => {
-        await retrieveCurrentQuestion();
-    };
+    const validateThatAnswer = (givenThatAnswer: AnswerLetter) => async () =>
+        dispatch(validateAnswer(question!.id, givenThatAnswer));
 
     return (
         <div>
             <img src={jfoucault} alt="Jean-Pierre Foucault"/>
             <br/>
-            {currentQuestion && <><Countdown/>
-                <QuestionTitle title={currentQuestion!.label}/>
-                <PossibleAnswers questionId={currentQuestion.id} possibleAnswers={currentQuestion.possibleAnswers} goToNextQuestion={goToNextQuestion}/>
+            {question && <><Countdown/>
+                <QuestionTitle title={question!.label}/>
+                <PossibleAnswers possibleAnswers={question.possibleAnswers} onGivenAnswer={validateThatAnswer}/>
             </>}
         </div>
     );

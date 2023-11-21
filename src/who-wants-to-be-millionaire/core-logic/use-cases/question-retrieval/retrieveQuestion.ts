@@ -1,6 +1,11 @@
-import {QuestionGateway} from "../../gateways/questionGateway.ts";
+import {AppThunk, ReduxStore} from "../../../store/reduxStore.ts";
 
-export const retrieveQuestion =
-    (questionGateway: QuestionGateway) =>  async () => {
-    return questionGateway.retrieveQuestion();
-};
+export const retrieveQuestion = (): AppThunk => {
+    return async (dispatch: ReduxStore['dispatch'], _, dependencies) => {
+        const question = await dependencies.questionGateway.retrieveQuestion();
+        dispatch({
+            type: 'QUESTION_RETRIEVED',
+            payload: question
+        });
+    };
+}

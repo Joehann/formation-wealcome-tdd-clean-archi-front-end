@@ -1,12 +1,7 @@
 import './index.css'
 import ReactDOM from 'react-dom/client';
-import {UseCasesContext} from "./who-wants-to-be-millionaire/adapters/primary/react/useCasesInjections.tsx";
 import React from 'react';
 import App from "./who-wants-to-be-millionaire/adapters/primary/react/components/App.tsx";
-import {validateAnswer} from "./who-wants-to-be-millionaire/core-logic/use-cases/answer-validation/validateAnswer.ts";
-import {
-    retrieveQuestion
-} from "./who-wants-to-be-millionaire/core-logic/use-cases/question-retrieval/retrieveQuestion.ts";
 import {
     InMemoryPoolQuestionGateway
 } from "./who-wants-to-be-millionaire/adapters/secondary/gateways/inMemoryPoolQuestionGateway.ts";
@@ -17,6 +12,8 @@ import {
 import {
     RandomPoolQuestionPicker
 } from "./who-wants-to-be-millionaire/adapters/secondary/gateways/randomPoolQuestionPicker.ts";
+import {Provider} from "react-redux";
+import {initReduxStore} from "./who-wants-to-be-millionaire/store/reduxStore.ts";
 
 
 const pool: Record<Question['id'], Question> = {
@@ -83,14 +80,12 @@ const answers: Record<Question['id'], AnswerLetter> = {
 const questionGateway = new InMemoryPoolQuestionGateway(pool, answers,
     new RandomPoolQuestionPicker(pool));
 
+const store = initReduxStore({questionGateway});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <UseCasesContext.Provider value={{
-            validateAnswer: validateAnswer(questionGateway),
-            retrieveQuestion: retrieveQuestion(questionGateway)
-        }}>
+        <Provider store={store}>
             <App/>
-        </UseCasesContext.Provider>
+        </Provider>
     </React.StrictMode>
 )

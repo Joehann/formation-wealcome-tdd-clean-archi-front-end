@@ -1,15 +1,15 @@
 import {render, screen} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import {UseCasesContext} from "../../useCasesInjections.tsx";
 import {QuestionGatewayStub} from "../../../../secondary/gateways/questionGatewayStub.ts";
 import App from "../App.tsx";
 import "@testing-library/jest-dom";
-import {validateAnswer} from "../../../../../core-logic/use-cases/answer-validation/validateAnswer.ts";
-import {retrieveQuestion} from "../../../../../core-logic/use-cases/question-retrieval/retrieveQuestion.ts";
+import {Provider} from "react-redux";
+import {initReduxStore, ReduxStore} from "../../../../../store/reduxStore.ts";
 
 describe('Question component', () => {
 
     let questionGateway: QuestionGatewayStub;
+    let store: ReduxStore;
 
     beforeEach(() => {
         questionGateway = new QuestionGatewayStub();
@@ -24,6 +24,7 @@ describe('Question component', () => {
                 D: 'Madrid'
             }
         }
+        store = initReduxStore({questionGateway}, [0, 1000000]);
     });
 
     describe('When the game starts', () => {
@@ -47,11 +48,8 @@ describe('Question component', () => {
     });
 
     const renderAppComponent = () => {
-        render(<UseCasesContext.Provider value={{
-            validateAnswer: validateAnswer(questionGateway),
-            retrieveQuestion: retrieveQuestion(questionGateway)
-        }}>
+        render(<Provider store={store} >
             <App/>
-        </UseCasesContext.Provider>);
+        </Provider>);
     }
 });

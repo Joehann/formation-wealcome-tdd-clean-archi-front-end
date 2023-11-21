@@ -1,9 +1,9 @@
-import {useContext} from "react";
-import {GameContext} from "../App.tsx";
+import {useSelector} from "react-redux";
+import {AppState} from "../../../../../store/appState.ts";
 
 export const Pyramid = () => {
 
-    const {pyramid} = useContext(GameContext);
+    const pyramid = useSelector((state: AppState) => state.pyramid);
 
     return (
         <div className="mt-3 justify-center rounded-lg text-yellow-500">
