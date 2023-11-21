@@ -13,7 +13,7 @@ import {answerValidationReducer as answerValidation} from "../core-logic/reducer
 import {pyramidReducer} from "../core-logic/reducers/pyramidReducer.ts";
 import {
     retrieveNextQuestionListener
-} from "../core-logic/use-cases/question-retrieval/nextQuestionRetrievalListener.ts";
+} from "../core-logic/use-cases/question-retrieval/retrieveNextQuestionRetrievalListener.ts";
 
 export type Dependencies = {
     questionGateway: QuestionGateway
