@@ -11,7 +11,7 @@ describe('Validate Answer', () => {
     beforeEach(() => {
         questionGateway = new QuestionGatewayStub();
         _validateAnswer = validateAnswer(questionGateway);
-        questionGateway.currentValidation = {A: true};
+        questionGateway.currentValidation = {'123abc': 'A'};
     });
 
     const setPyramid = (p: Pyramid) => {
@@ -20,7 +20,7 @@ describe('Validate Answer', () => {
 
     it('A correct given answer should end up with a successful validation', async () => {
         pyramid = {steps: [0, 10], currentStep: 0};
-        const validation = await _validateAnswer(pyramid, setPyramid)('A');
+        const validation = await _validateAnswer(pyramid, setPyramid)('123abc', 'A');
         expect(validation).toBe(true);
     });
 
@@ -36,7 +36,7 @@ describe('Validate Answer', () => {
         // GIVEN - ARRANGE
         pyramid = initialPyramid;
         // WHEN - ACT
-        await _validateAnswer(initialPyramid, setPyramid)(givenAnswer);
+        await _validateAnswer(initialPyramid, setPyramid)('123abc', givenAnswer);
         // THEN - ASSERT
         expect(pyramid).toEqual({
             ...pyramid,

@@ -24,12 +24,12 @@ describe('Question component', () => {
                 D: 'Madrid'
             }
         }
-        renderAppComponent();
     });
 
     describe('When the game starts', () => {
 
         it('should retrieve the current question', async() => {
+            renderAppComponent();
             expect(await screen.findByText('What is the capital of France?')).toBeInTheDocument();
         });
 
@@ -39,6 +39,7 @@ describe('Question component', () => {
 
         it('should increase the pyramid step',
             async () => {
+                renderAppComponent();
                 await userEvent.click(await screen.findByText('Paris'));
                 expect(await screen.findByText('0 €')).not.toHaveClass('rounded-full bg-orange-500');
                 expect(screen.getByText('1000000 €')).toHaveClass('rounded-full bg-orange-500');

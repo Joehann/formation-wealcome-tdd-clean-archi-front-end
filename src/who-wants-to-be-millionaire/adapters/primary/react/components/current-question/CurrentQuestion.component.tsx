@@ -16,7 +16,6 @@ export const CurrentQuestion = () => {
             const question = await retrieveQuestion();
             setCurrentQuestion(question);
         }
-
         retrieveCurrentQuestion();
     }, []);
 
