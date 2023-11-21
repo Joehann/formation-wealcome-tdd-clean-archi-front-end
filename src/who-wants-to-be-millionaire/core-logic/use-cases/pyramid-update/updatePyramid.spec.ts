@@ -8,7 +8,7 @@ describe('Update Pyramid', () => {
     let pyramidSteps: number[] = [0, 10, 20];
 
     beforeEach(() => {
-        store = initReduxStore({}, pyramidSteps);
+        store = initReduxStore({pyramidSteps});
         initialState = store.getState();
     });
 

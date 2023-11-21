@@ -11,28 +11,41 @@ import {questionRetrievalReducer as questionRetrieval} from "../core-logic/reduc
 import {QuestionGateway} from "../core-logic/gateways/questionGateway.ts";
 import {answerValidationReducer as answerValidation} from "../core-logic/reducers/answerValidationReducer.ts";
 import {pyramidReducer} from "../core-logic/reducers/pyramidReducer.ts";
+import {retrieveNextQuestion} from "../core-logic/use-cases/question-retrieval/nextQuestionRetrievalListener.ts";
 
 export type Dependencies = {
     questionGateway: QuestionGateway
 }
 
 
-export const initReduxStore = (dependencies: Partial<Dependencies>,
-                               pyramidSteps: number[] = [0, 200, 300, 500, 100000]) => {
+export const initReduxStore = (options: {
+    dependencies?: Partial<Dependencies>,
+    pyramidSteps?: number[],
+    enableActionsListeners?: boolean,
+}) => {
+    const config = {
+        dependencies: options.dependencies || {},
+        pyramidSteps: options.pyramidSteps || [0, 200, 300, 500, 100000],
+        enableActionsListeners: options.enableActionsListeners || false,
+    };
     return configureStore({
         reducer: {
             questionRetrieval,
             answerValidation,
-            pyramid: pyramidReducer(pyramidSteps),
+            pyramid: pyramidReducer(config.pyramidSteps),
         },
         devTools: true,
-        middleware: (getDefaultMiddleware) =>
-            getDefaultMiddleware({
+        middleware: (getDefaultMiddleware) => {
+            const middleware = getDefaultMiddleware({
                 thunk: {
-                    extraArgument: dependencies
+                    extraArgument: config.dependencies
                 },
                 serializableCheck: false,
-            }),
+            });
+            if (config.enableActionsListeners)
+                middleware.prepend(retrieveNextQuestion().middleware);
+            return middleware;
+        }
     });
 };
 

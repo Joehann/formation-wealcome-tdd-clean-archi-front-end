@@ -80,7 +80,7 @@ const answers: Record<Question['id'], AnswerLetter> = {
 const questionGateway = new InMemoryPoolQuestionGateway(pool, answers,
     new RandomPoolQuestionPicker(pool));
 
-const store = initReduxStore({questionGateway});
+const store = initReduxStore({dependencies: {questionGateway}});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>

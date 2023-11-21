@@ -12,7 +12,7 @@ describe('Validate Answer', () => {
 
     beforeEach(() => {
         questionGateway = new QuestionGatewayStub();
-        store = initReduxStore({questionGateway});
+        store = initReduxStore({dependencies: {questionGateway}});
         questionGateway.currentValidation = {'123abc': 'A'};
         initialState = store.getState();
     });

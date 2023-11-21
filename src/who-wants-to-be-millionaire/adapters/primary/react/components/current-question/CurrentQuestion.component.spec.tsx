@@ -24,7 +24,7 @@ describe('Question component', () => {
                 D: 'Madrid'
             }
         }
-        store = initReduxStore({questionGateway}, [0, 1000000]);
+        store = initReduxStore({dependencies: {questionGateway}, pyramidSteps: [0, 1000000]});
     });
 
     describe('When the game starts', () => {

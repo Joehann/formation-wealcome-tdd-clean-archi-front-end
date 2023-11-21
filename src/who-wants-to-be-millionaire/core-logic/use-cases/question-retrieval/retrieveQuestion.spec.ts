@@ -11,7 +11,7 @@ describe('Retrieve Question', () => {
 
     beforeEach(() => {
         questionGateway = new QuestionGatewayStub();
-        store = initReduxStore({questionGateway});
+        store = initReduxStore({dependencies: {questionGateway}});
         initialState = store.getState();
     });
 
