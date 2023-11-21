@@ -7,7 +7,7 @@ export type Pyramid = {
 }
 
 export const validateAnswer = (questionGateway: QuestionGateway) =>
-    (pyramid: Pyramid, setPyramid: (pyramid: Pyramid) => void) =>
+    (pyramid: Pyramid, setPyramid: (pyramid: Pyramid) => void, goToNextQuestion: () => void) =>
         async (questionId: string, givenAnswer: AnswerLetter) => {
 
             const increaseStep = () => {
@@ -21,8 +21,10 @@ export const validateAnswer = (questionGateway: QuestionGateway) =>
 
             const isCorrect = await questionGateway.validate(questionId, givenAnswer);
             const {steps, currentStep} = pyramid;
-            if (isCorrect)
+            if (isCorrect) {
                 increaseStep();
+                goToNextQuestion();
+            }
             else
                 resetPyramid();
             return isCorrect;

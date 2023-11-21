@@ -1,6 +1,6 @@
 import "../../../../../App.css";
 import {Pyramid} from "../../../../core-logic/use-cases/answer-validation/validateAnswer.ts";
-import React, {Context} from "react";
+import React from "react";
 import {GameScreen} from "./GameScreen.tsx";
 
 type Game = {
@@ -8,23 +8,19 @@ type Game = {
     setPyramid: (pyramid: Pyramid) => void;
 }
 
-export let GameContext: Context<Game>;
+export let GameContext = React.createContext<Game>(null as any);
 
 const App = () => {
 
-    const initialGame: Game = {
+    const [game, setGame] = React.useState<Game>({
         pyramid: {steps: [0, 1000000], currentStep: 0},
         setPyramid: (pyramid: Pyramid) => {
             setGame({...game, pyramid});
         }
-    };
-
-    GameContext = React.createContext<Game>(initialGame);
-
-    const [game, setGame] = React.useState<Game>(initialGame);
+    });
 
     return <GameContext.Provider value={game}>
-        <GameScreen />
+        <GameScreen/>
     </GameContext.Provider>
 };
 

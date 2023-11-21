@@ -13,7 +13,7 @@ describe('Question component', () => {
 
     beforeEach(() => {
         questionGateway = new QuestionGatewayStub();
-        questionGateway.currentValidation = {A: true}
+        questionGateway.currentValidation = {'123abc': 'A'}
         questionGateway.question = {
             id: '123abc',
             label: 'What is the capital of France?',

@@ -11,13 +11,18 @@ export const CurrentQuestion = () => {
     const {retrieveQuestion} = useContext(UseCasesContext);
     const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
 
+    async function retrieveCurrentQuestion() {
+        const question = await retrieveQuestion();
+        setCurrentQuestion(question);
+    }
+
     useEffect(() => {
-        async function retrieveCurrentQuestion() {
-            const question = await retrieveQuestion();
-            setCurrentQuestion(question);
-        }
-        retrieveCurrentQuestion();
+        goToNextQuestion();
     }, []);
+
+    const goToNextQuestion = async () => {
+        await retrieveCurrentQuestion();
+    };
 
     return (
         <div>
@@ -25,7 +30,7 @@ export const CurrentQuestion = () => {
             <br/>
             {currentQuestion && <><Countdown/>
                 <QuestionTitle title={currentQuestion!.label}/>
-                <PossibleAnswers possibleAnswers={currentQuestion.possibleAnswers}/>
+                <PossibleAnswers questionId={currentQuestion.id} possibleAnswers={currentQuestion.possibleAnswers} goToNextQuestion={goToNextQuestion}/>
             </>}
         </div>
     );
