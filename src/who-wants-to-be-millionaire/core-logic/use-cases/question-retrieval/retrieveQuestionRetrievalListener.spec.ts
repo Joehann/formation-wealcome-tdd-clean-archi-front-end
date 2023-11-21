@@ -18,22 +18,25 @@ describe('Retrieve Question Listener', () => {
         store.dispatch(questionRetrievedAction({question: firstQuestion}));
     });
 
-    it('should retrieve the next question upon a correct answer', done => {
+    it('should retrieve the next question upon a correct answer', () => {
+        questionGateway.question = nextQuestion;
+        return new Promise(resolve => {
             store.subscribe(() => {
-                /*if(store.getState().answerValidation)
-                    return;*/
-                console.log(store.getState());
-                /*expect(store.getState()).toEqual({
+                if(store.getState().answerValidation)
+                    return;
+                expect(store.getState()).toEqual({
                     ...initialState,
+                    answerValidation: null,
                     questionRetrieval: {
-                        data: firstQuestion,
+                        data: nextQuestion,
                     },
-                });*/
-                done();
+                });
+                resolve({});
             });
             store.dispatch(answerValidatedAction({isCorrect: true}));
-        }
-    );
+            initialState = store.getState();
+        });
+    });
 
     const firstQuestion: Question = {
         id: '123abc',

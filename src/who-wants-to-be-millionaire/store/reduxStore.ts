@@ -11,7 +11,9 @@ import {questionRetrievalReducer as questionRetrieval} from "../core-logic/reduc
 import {QuestionGateway} from "../core-logic/gateways/questionGateway.ts";
 import {answerValidationReducer as answerValidation} from "../core-logic/reducers/answerValidationReducer.ts";
 import {pyramidReducer} from "../core-logic/reducers/pyramidReducer.ts";
-import {retrieveNextQuestion} from "../core-logic/use-cases/question-retrieval/nextQuestionRetrievalListener.ts";
+import {
+    retrieveNextQuestionListener
+} from "../core-logic/use-cases/question-retrieval/nextQuestionRetrievalListener.ts";
 
 export type Dependencies = {
     questionGateway: QuestionGateway
@@ -42,21 +44,22 @@ export const initReduxStore = (options: {
                 },
                 serializableCheck: false,
             });
-            if (config.enableActionsListeners)
-                middleware.prepend(retrieveNextQuestion().middleware);
+            if (config.enableActionsListeners) {
+                return middleware.prepend(retrieveNextQuestionListener.middleware);
+            }
             return middleware;
         }
     });
 };
 
 export type ReduxStore = Store<AppState> & {
-    dispatch: ThunkDispatch<AppState, any, Action>;
+    dispatch: ThunkDispatch<AppState, Dependencies, Action>;
 };
 
 export type AppThunk<ReturnType = Promise<void>> = ThunkAction<
     ReturnType,
     AppState,
-    any,
+    Dependencies,
     AnyAction
 >;
 
